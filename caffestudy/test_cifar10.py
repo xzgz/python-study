@@ -1,8 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import caffe, cv2
-caffe_root = '/media/xzgz/Ubuntu/Ubuntu/Caffe/SourceCode/'
 import os
+# import cv2
+import sys
+sys.path.insert(0, '/media/xzgz/Ubuntu/Ubuntu/Caffe/SourceCode/python')
+import caffe
+caffe_root = '/media/xzgz/Ubuntu/Ubuntu/Caffe/SourceCode/'
 os.chdir(caffe_root)
 
 if not os.path.isfile(caffe_root + 'examples/cifar10/cifar10_quick_iter_4000.caffemodel'):
@@ -16,8 +19,8 @@ net = caffe.Net(caffe_root + 'examples/cifar10/cifar10_quick.prototxt',
 print net.blobs['data'].data.shape
 
 im = caffe.io.load_image('examples/images/cat_gray.jpg')
-# res = caffe.io.resize_image(im, (32, 32))
-res = cv2.resize(im, (32, 32), cv2.INTER_CUBIC)
+res = caffe.io.resize_image(im, (32, 32))
+# res = cv2.resize(im, (32, 32), cv2.INTER_CUBIC)
 plt.rcParams['image.cmap'] = 'gray'
 plt.figure()
 plt.imshow(res)
@@ -112,7 +115,7 @@ print feat, feat.flat
 plt.figure()
 plt.plot(feat.flat)
 
-# plt.show()
+plt.show()
 
 
 
